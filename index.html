@@ -1160,553 +1160,435 @@
   </div>
 
   <script>
-    // حالة الـ Wizard
-    let currentStep = 1;
-    const maxStepExperimental = 8; // حالياً نستخدم 3 خطوات فقط في النسخة التجريبية
-    // ربط بعض الحقول بالغلاف مباشرة
-    document.addEventListener("DOMContentLoaded", () => {
-      const titleInput = document.getElementById("pTitle");
-      const clientInput = document.getElementById("pClient");
-      const refInput = document.getElementById("pRef");
-      const closingInput = document.getElementById("pClosing");
-      const durationInput = document.getElementById("pDuration");
-      const platformSelect = document.getElementById("pPlatform");
+  // حالة الـ Wizard
+  let currentStep = 1;
+  const maxStepExperimental = 8;
 
-      function updateCover() {
-        if (titleInput) document.getElementById("coverProjectTitle").textContent = titleInput.value || "عنوان المشروع";
-        if (clientInput) document.getElementById("coverClient").innerHTML =
-          `مقدم إلى: <strong>${clientInput.value || "اسم الجهة"}</strong>`;
-        if (refInput) document.getElementById("coverRef").textContent = refInput.value || "—";
-        if (closingInput) document.getElementById("coverClosing").textContent = closingInput.value || "—";
-        if (durationInput) document.getElementById("coverDuration").textContent =
-          (durationInput.value ? durationInput.value + " شهرًا" : "—");
-        if (platformSelect) document.getElementById("coverPlatform").textContent =
-          platformSelect.value || "—";
-      }
+  document.addEventListener("DOMContentLoaded", () => {
+    const titleInput = document.getElementById("pTitle");
+    const clientInput = document.getElementById("pClient");
+    const refInput = document.getElementById("pRef");
+    const closingInput = document.getElementById("pClosing");
+    const durationInput = document.getElementById("pDuration");
+    const platformSelect = document.getElementById("pPlatform");
 
-      [titleInput, clientInput, refInput, closingInput, durationInput, platformSelect].forEach(el => {
-        if (el) el.addEventListener("input", updateCover);
-        if (el && el.tagName === "SELECT") el.addEventListener("change", updateCover);
-      });
+    function updateCover() {
+      if (titleInput) document.getElementById("coverProjectTitle").textContent = titleInput.value || "عنوان المشروع";
+      if (clientInput) document.getElementById("coverClient").innerHTML =
+        `مقدم إلى: <strong>${clientInput.value || "اسم الجهة"}</strong>`;
+      if (refInput) document.getElementById("coverRef").textContent = refInput.value || "—";
+      if (closingInput) document.getElementById("coverClosing").textContent = closingInput.value || "—";
+      if (durationInput) document.getElementById("coverDuration").textContent =
+        (durationInput.value ? durationInput.value + " شهرًا" : "—");
+      if (platformSelect) document.getElementById("coverPlatform").textContent =
+        platformSelect.value || "—";
+    }
 
-      updateCover(); // تشغيل مبدئي
+    [titleInput, clientInput, refInput, closingInput, durationInput, platformSelect].forEach(el => {
+      if (el) el.addEventListener("input", updateCover);
+      if (el && el.tagName === "SELECT") el.addEventListener("change", updateCover);
     });
 
+    updateCover();
+  });
 
-    function showView(view) {
-      document.getElementById('dashboardView').classList.remove('active');
-      document.getElementById('wizardView').classList.remove('active');
+  function showView(view) {
+    document.getElementById('dashboardView').classList.remove('active');
+    document.getElementById('wizardView').classList.remove('active');
 
-      if (view === 'dashboard') {
-        document.getElementById('dashboardView').classList.add('active');
-      } else if (view === 'wizard') {
-        document.getElementById('wizardView').classList.add('active');
-      }
+    if (view === 'dashboard') {
+      document.getElementById('dashboardView').classList.add('active');
+    } else if (view === 'wizard') {
+      document.getElementById('wizardView').classList.add('active');
     }
+  }
 
-    function startNewProposal() {
-      // في المستقبل: هنا نربط بإنشاء صف جديد في Google Sheet (Proposals)
-      showView('wizard');
-      goToStep(1);
-    }
+  function startNewProposal() {
+    showView('wizard');
+    goToStep(1);
+  }
 
-    function goToStep(step) {
-      if (step < 1 || step > maxStepExperimental) return;
-      currentStep = step;
+  function goToStep(step) {
+    if (step < 1 || step > maxStepExperimental) return;
+    currentStep = step;
 
-      // تبديل الشرائح
-      document.querySelectorAll('.wizard-step-panel').forEach(panel => {
-        const s = Number(panel.getAttribute('data-step-panel'));
-        panel.style.display = (s === step) ? 'block' : 'none';
-      });
-
-      // تحديث الشرائح في الشريط
-      document.querySelectorAll('.wizard-step-chip').forEach(chip => {
-        const s = Number(chip.getAttribute('data-step'));
-        chip.classList.toggle('active', s === step);
-      });
-
-      // أزرار التالي / السابق
-      document.getElementById('prevBtn').disabled = (step === 1);
-      document.getElementById('nextBtn').textContent = (step === maxStepExperimental) ? 'حفظ (نسخة تجريبية)' : 'التالي';
-
-      document.getElementById('wizardStepLabel').textContent =
-        `الخطوة ${step} من ${maxStepExperimental} (مرحلة تجريبية)`;
-    }
-
-    function nextStep() {
-      if (currentStep < maxStepExperimental) {
-        goToStep(currentStep + 1);
-      } else {
-        // مستقبلاً: حفظ إلى Google Sheet
-        alert('سيتم في الإصدارات القادمة حفظ بيانات العرض الفني إلى Google Sheet وربطها بالتقارير والغلاف.');
-      }
-    }
-
-    function prevStep() {
-      if (currentStep > 1) {
-        goToStep(currentStep - 1);
-      }
-    }
-
-    function addPhaseRow() {
-      const tbody = document.querySelector('#phasesTable tbody');
-      const rowCount = tbody.rows.length + 1;
-      const tr = document.createElement('tr');
-
-      tr.innerHTML = `
-        <td>${rowCount}</td>
-        <td><input type="text" placeholder="اسم المرحلة" /></td>
-        <td><input type="text" placeholder="وصف مختصر" /></td>
-        <td><input type="date" /></td>
-        <td><input type="date" /></td>
-        <td><button type="button" class="secondary-btn" onclick="deletePhaseRow(this)">✕</button></td>
-      `;
-      tbody.appendChild(tr);
-    }
-
-    function deletePhaseRow(btn) {
-      const row = btn.closest('tr');
-      row.remove();
-      // إعادة ترقيم الصفوف
-      document.querySelectorAll('#phasesTable tbody tr').forEach((tr, idx) => {
-        tr.cells[0].textContent = idx + 1;
-      });
-    }
-     <script>
-    // حالة الـ Wizard
-    let currentStep = 1;
-    const maxStepExperimental = 8;
-
-    // ربط بعض الحقول بالغلاف مباشرة
-    document.addEventListener("DOMContentLoaded", () => {
-      const titleInput = document.getElementById("pTitle");
-      const clientInput = document.getElementById("pClient");
-      const refInput = document.getElementById("pRef");
-      const closingInput = document.getElementById("pClosing");
-      const durationInput = document.getElementById("pDuration");
-      const platformSelect = document.getElementById("pPlatform");
-
-      function updateCover() {
-        if (titleInput) document.getElementById("coverProjectTitle").textContent = titleInput.value || "عنوان المشروع";
-        if (clientInput) document.getElementById("coverClient").innerHTML =
-          `مقدم إلى: <strong>${clientInput.value || "اسم الجهة"}</strong>`;
-        if (refInput) document.getElementById("coverRef").textContent = refInput.value || "—";
-        if (closingInput) document.getElementById("coverClosing").textContent = closingInput.value || "—";
-        if (durationInput) document.getElementById("coverDuration").textContent =
-          (durationInput.value ? durationInput.value + " شهرًا" : "—");
-        if (platformSelect) document.getElementById("coverPlatform").textContent =
-          platformSelect.value || "—";
-      }
-
-      [titleInput, clientInput, refInput, closingInput, durationInput, platformSelect].forEach(el => {
-        if (el) el.addEventListener("input", updateCover);
-        if (el && el.tagName === "SELECT") el.addEventListener("change", updateCover);
-      });
-
-      updateCover(); // تشغيل مبدئي
+    document.querySelectorAll('.wizard-step-panel').forEach(panel => {
+      const s = Number(panel.getAttribute('data-step-panel'));
+      panel.style.display = (s === step) ? 'block' : 'none';
     });
 
-    function showView(view) {
-      document.getElementById('dashboardView').classList.remove('active');
-      document.getElementById('wizardView').classList.remove('active');
+    document.querySelectorAll('.wizard-step-chip').forEach(chip => {
+      const s = Number(chip.getAttribute('data-step'));
+      chip.classList.toggle('active', s === step);
+    });
 
-      if (view === 'dashboard') {
-        document.getElementById('dashboardView').classList.add('active');
-      } else if (view === 'wizard') {
-        document.getElementById('wizardView').classList.add('active');
+    document.getElementById('prevBtn').disabled = (step === 1);
+    document.getElementById('nextBtn').textContent = (step === maxStepExperimental) ? 'حفظ (نسخة تجريبية)' : 'التالي';
+
+    document.getElementById('wizardStepLabel').textContent =
+      `الخطوة ${step} من ${maxStepExperimental} (مرحلة تجريبية)`;
+  }
+
+  function nextStep() {
+    if (currentStep < maxStepExperimental) {
+      goToStep(currentStep + 1);
+    } else {
+      alert('سيتم في الإصدارات القادمة حفظ بيانات العرض الفني إلى Google Sheet وربطها بالتقارير والغلاف.');
+    }
+  }
+
+  function prevStep() {
+    if (currentStep > 1) {
+      goToStep(currentStep - 1);
+    }
+  }
+
+  function addPhaseRow() {
+    const tbody = document.querySelector('#phasesTable tbody');
+    const rowCount = tbody.rows.length + 1;
+    const tr = document.createElement('tr');
+
+    tr.innerHTML = `
+      <td>${rowCount}</td>
+      <td><input type="text" placeholder="اسم المرحلة" /></td>
+      <td><input type="text" placeholder="وصف مختصر" /></td>
+      <td><input type="date" /></td>
+      <td><input type="date" /></td>
+      <td><button type="button" class="secondary-btn" onclick="deletePhaseRow(this)">✕</button></td>
+    `;
+    tbody.appendChild(tr);
+  }
+
+  function deletePhaseRow(btn) {
+    const row = btn.closest('tr');
+    row.remove();
+    document.querySelectorAll('#phasesTable tbody tr').forEach((tr, idx) => {
+      tr.cells[0].textContent = idx + 1;
+    });
+  }
+
+  function generateGanttFromPhases() {
+    const container = document.getElementById("ganttContainer");
+    const rows = document.querySelectorAll("#phasesTable tbody tr");
+    const phases = [];
+
+    rows.forEach(row => {
+      const name = row.cells[1].querySelector("input").value;
+      const desc = row.cells[2].querySelector("input").value;
+      const start = row.cells[3].querySelector("input").value;
+      const end = row.cells[4].querySelector("input").value;
+
+      if (name && start && end) {
+        phases.push({ name, desc, start: new Date(start), end: new Date(end) });
       }
+    });
+
+    if (!phases.length) {
+      container.innerHTML = `<p style="font-size:0.8rem; color:#b91c1c;">الرجاء إدخال اسم وتواريخ البداية والنهاية لمرحلة واحدة على الأقل.</p>`;
+      return;
     }
 
-    function startNewProposal() {
-      showView('wizard');
-      goToStep(1);
-    }
+    const minDate = new Date(Math.min(...phases.map(p => p.start.getTime())));
+    const maxDate = new Date(Math.max(...phases.map(p => p.end.getTime())));
+    const totalDays = Math.max(1, Math.round((maxDate - minDate) / (1000 * 60 * 60 * 24)));
 
-    function goToStep(step) {
-      if (step < 1 || step > maxStepExperimental) return;
-      currentStep = step;
+    let html = `
+      <div style="font-size:0.78rem; color:#4b5563; margin-bottom:6px;">
+        من ${minDate.toLocaleDateString("ar-SA")} إلى ${maxDate.toLocaleDateString("ar-SA")} (${totalDays} يومياً تقريباً)
+      </div>
+      <div style="display:flex; flex-direction:column; gap:4px;">
+    `;
 
-      document.querySelectorAll('.wizard-step-panel').forEach(panel => {
-        const s = Number(panel.getAttribute('data-step-panel'));
-        panel.style.display = (s === step) ? 'block' : 'none';
-      });
+    phases.forEach((p, idx) => {
+      const offsetDays = Math.round((p.start - minDate) / (1000 * 60 * 60 * 24));
+      const phaseDays = Math.max(1, Math.round((p.end - p.start) / (1000 * 60 * 60 * 24)));
+      const leftPercent = (offsetDays / totalDays) * 100;
+      const widthPercent = (phaseDays / totalDays) * 100;
 
-      document.querySelectorAll('.wizard-step-chip').forEach(chip => {
-        const s = Number(chip.getAttribute('data-step'));
-        chip.classList.toggle('active', s === step);
-      });
-
-      document.getElementById('prevBtn').disabled = (step === 1);
-      document.getElementById('nextBtn').textContent =
-        (step === maxStepExperimental) ? 'حفظ (نسخة تجريبية)' : 'التالي';
-
-      document.getElementById('wizardStepLabel').textContent =
-        `الخطوة ${step} من ${maxStepExperimental} (مرحلة تجريبية)`;
-    }
-
-    function nextStep() {
-      if (currentStep < maxStepExperimental) {
-        goToStep(currentStep + 1);
-      } else {
-        alert('سيتم في الإصدارات القادمة حفظ بيانات العرض الفني إلى Google Sheet وربطها بالتقارير والغلاف.');
-      }
-    }
-
-    function prevStep() {
-      if (currentStep > 1) {
-        goToStep(currentStep - 1);
-      }
-    }
-
-    function addPhaseRow() {
-      const tbody = document.querySelector('#phasesTable tbody');
-      const rowCount = tbody.rows.length + 1;
-      const tr = document.createElement('tr');
-
-      tr.innerHTML = `
-        <td>${rowCount}</td>
-        <td><input type="text" placeholder="اسم المرحلة" /></td>
-        <td><input type="text" placeholder="وصف مختصر" /></td>
-        <td><input type="date" /></td>
-        <td><input type="date" /></td>
-        <td><button type="button" class="secondary-btn" onclick="deletePhaseRow(this)">✕</button></td>
+      html += `
+        <div>
+          <div style="display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:2px;">
+            <span>${idx + 1}. ${p.name}</span>
+            <span>${p.start.toLocaleDateString("ar-SA")} → ${p.end.toLocaleDateString("ar-SA")}</span>
+          </div>
+          <div style="position:relative; height:18px; background:#e5e7eb; border-radius:999px; overflow:hidden;">
+            <div style="
+              position:absolute;
+              inset-block:2px;
+              inset-inline-start:${leftPercent}%;
+              width:${widthPercent}%;
+              min-width:6%;
+              border-radius:999px;
+              background:linear-gradient(90deg, var(--tilad-teal), var(--tilad-purple));
+            "></div>
+          </div>
+        </div>
       `;
-      tbody.appendChild(tr);
-    }
+    });
 
-    function deletePhaseRow(btn) {
-      const row = btn.closest('tr');
-      row.remove();
-      document.querySelectorAll('#phasesTable tbody tr').forEach((tr, idx) => {
-        tr.cells[0].textContent = idx + 1;
-      });
-    }
+    html += `</div>`;
+    container.innerHTML = html;
+  }
 
-    function generateGanttFromPhases() {
-      const container = document.getElementById("ganttContainer");
-      const rows = document.querySelectorAll("#phasesTable tbody tr");
-      const phases = [];
+  async function loadExperienceProjects() {
+    const container = document.getElementById("expProjectsContainer");
+    container.innerHTML = "جاري التحميل...";
 
-      rows.forEach(row => {
-        const name = row.cells[1].querySelector("input").value;
-        const desc = row.cells[2].querySelector("input").value;
-        const start = row.cells[3].querySelector("input").value;
-        const end = row.cells[4].querySelector("input").value;
+    try {
+      const sheetId = "SHEET_ID";
+      const tab = "Experience_Projects";
 
-        if (name && start && end) {
-          phases.push({ name, desc, start: new Date(start), end: new Date(end) });
-        }
-      });
+      const url =
+        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
 
-      if (!phases.length) {
-        container.innerHTML = `<p style="font-size:0.8rem; color:#b91c1c;">الرجاء إدخال اسم وتواريخ البداية والنهاية لمرحلة واحدة على الأقل.</p>`;
-        return;
-      }
-
-      const minDate = new Date(Math.min(...phases.map(p => p.start.getTime())));
-      const maxDate = new Date(Math.max(...phases.map(p => p.end.getTime())));
-      const totalDays = Math.max(1, Math.round((maxDate - minDate) / (1000 * 60 * 60 * 24)));
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
 
       let html = `
-        <div style="font-size:0.78rem; color:#4b5563; margin-bottom:6px;">
-          من ${minDate.toLocaleDateString("ar-SA")} إلى ${maxDate.toLocaleDateString("ar-SA")} (${totalDays} يومياً تقريباً)
-        </div>
-        <div style="display:flex; flex-direction:column; gap:4px;">
+        <table class="proposal-table" style="margin-top:6px;">
+          <thead>
+            <tr>
+              <th>اختيار</th>
+              <th>اسم المشروع</th>
+              <th>الجهة</th>
+              <th>السنة</th>
+              <th>الوصف</th>
+            </tr>
+          </thead>
+          <tbody>
       `;
 
-      phases.forEach((p, idx) => {
-        const offsetDays = Math.round((p.start - minDate) / (1000 * 60 * 60 * 24));
-        const phaseDays = Math.max(1, Math.round((p.end - p.start) / (1000 * 60 * 60 * 24)));
-        const leftPercent = (offsetDays / totalDays) * 100;
-        const widthPercent = (phaseDays / totalDays) * 100;
+      json.table.rows.forEach((r, i) => {
+        const proj = r.c.map(c => c ? c.v : "");
 
         html += `
-          <div>
-            <div style="display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:2px;">
-              <span>${idx + 1}. ${p.name}</span>
-              <span>${p.start.toLocaleDateString("ar-SA")} → ${p.end.toLocaleDateString("ar-SA")}</span>
-            </div>
-            <div style="position:relative; height:18px; background:#e5e7eb; border-radius:999px; overflow:hidden;">
-              <div style="
-                position:absolute;
-                inset-block:2px;
-                inset-inline-start:${leftPercent}%;
-                width:${widthPercent}%;
-                min-width:6%;
-                border-radius:999px;
-                background:linear-gradient(90deg, var(--tilad-teal), var(--tilad-purple));
-              "></div>
-            </div>
-          </div>
+          <tr>
+            <td><input type="checkbox" data-exp-index="${i}" /></td>
+            <td>${proj[0]}</td>
+            <td>${proj[1]}</td>
+            <td>${proj[2]}</td>
+            <td>${proj[3]}</td>
+          </tr>
         `;
       });
 
-      html += `</div>`;
+      html += `</tbody></table>`;
       container.innerHTML = html;
+
+    } catch (err) {
+      container.innerHTML = `<span style="color:red;">تعذر تحميل البيانات</span>`;
     }
+  }
 
-    async function loadExperienceProjects() {
-      const container = document.getElementById("expProjectsContainer");
-      container.innerHTML = "جاري التحميل...";
+  async function loadTeamMembers() {
+    const container = document.getElementById("teamMembersContainer");
+    container.innerHTML = "جاري التحميل...";
 
-      try {
-        const sheetId = "SHEET_ID";
-        const tab = "Experience_Projects";
+    try {
+      const sheetId = "SHEET_ID";
+      const tab = "Team_Members";
 
-        const url =
-          `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
+      const url =
+        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
 
-        const res = await fetch(url);
-        const text = await res.text();
-        const json = JSON.parse(text.substring(47, text.length - 2));
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
 
-        let html = `
-          <table class="proposal-table" style="margin-top:6px;">
-            <thead>
-              <tr>
-                <th>اختيار</th>
-                <th>اسم المشروع</th>
-                <th>الجهة</th>
-                <th>السنة</th>
-                <th>الوصف</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        json.table.rows.forEach((r, i) => {
-          const proj = r.c.map(c => c ? c.v : "");
-
-          html += `
+      let html = `
+        <table class="proposal-table" style="margin-top:6px;">
+          <thead>
             <tr>
-              <td><input type="checkbox" data-exp-index="${i}" /></td>
-              <td>${proj[0]}</td>
-              <td>${proj[1]}</td>
-              <td>${proj[2]}</td>
-              <td>${proj[3]}</td>
+              <th>اختيار</th>
+              <th>الاسم</th>
+              <th>المنصب</th>
+              <th>الخبرة (سنة)</th>
+              <th>مؤهلات</th>
             </tr>
-          `;
-        });
-
-        html += `</tbody></table>`;
-        container.innerHTML = html;
-
-      } catch (err) {
-        container.innerHTML = `<span style="color:red;">تعذر تحميل البيانات</span>`;
-      }
-    }
-
-    async function loadTeamMembers() {
-      const container = document.getElementById("teamMembersContainer");
-      container.innerHTML = "جاري التحميل...";
-
-      try {
-        const sheetId = "SHEET_ID";
-        const tab = "Team_Members";
-
-        const url =
-          `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-
-        const res = await fetch(url);
-        const text = await res.text();
-        const json = JSON.parse(text.substring(47, text.length - 2));
-
-        let html = `
-          <table class="proposal-table" style="margin-top:6px;">
-            <thead>
-              <tr>
-                <th>اختيار</th>
-                <th>الاسم</th>
-                <th>المنصب</th>
-                <th>الخبرة (سنة)</th>
-                <th>مؤهلات</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        json.table.rows.forEach((r, i) => {
-          const m = r.c.map(c => c ? c.v : "");
-
-          html += `
-            <tr>
-              <td><input type="checkbox" data-team-index="${i}" /></td>
-              <td>${m[0]}</td>
-              <td>${m[1]}</td>
-              <td>${m[2]}</td>
-              <td>${m[3]}</td>
-            </tr>
-          `;
-        });
-
-        html += `</tbody></table>`;
-        container.innerHTML = html;
-
-      } catch (err) {
-        container.innerHTML = `<span style="color:red;">تعذر تحميل الفريق</span>`;
-      }
-    }
-
-    async function loadCompanyDocs() {
-      const container = document.getElementById("docsContainer");
-      container.innerHTML = "جاري التحميل...";
-
-      try {
-        const sheetId = "SHEET_ID";
-        const tab = "Company_Docs";
-
-        const url =
-          `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-
-        const res = await fetch(url);
-        const text = await res.text();
-        const json = JSON.parse(text.substring(47, text.length - 2));
-
-        let html = `
-          <table class="proposal-table" style="margin-top:6px;">
-            <thead>
-              <tr>
-                <th>اختيار</th>
-                <th>اسم الوثيقة</th>
-                <th>النوع</th>
-                <th>الوصف</th>
-              </tr>
-            </thead>
-            <tbody>
-        `;
-
-        json.table.rows.forEach((r, i) => {
-          const d = r.c.map(c => c ? c.v : "");
-
-          html += `
-            <tr>
-              <td><input type="checkbox" data-doc-index="${i}" /></td>
-              <td>${d[0]}</td>
-              <td>${d[1]}</td>
-              <td>${d[2]}</td>
-            </tr>
-          `;
-        });
-
-        html += `</tbody></table>`;
-        container.innerHTML = html;
-
-      } catch (err) {
-        container.innerHTML = `<span style="color:red;">تعذر تحميل الوثائق</span>`;
-      }
-    }
-
-    function generatePreview() {
-      const title = document.getElementById("pTitle").value;
-      const client = document.getElementById("pClient").value;
-      const duration = document.getElementById("pDuration").value;
-
-      const intro = document.getElementById("pIntro").value;
-      const understanding = document.getElementById("pUnderstanding").value;
-      const objectives = document.getElementById("pObjectives").value;
-      const summary = document.getElementById("pExecSummary").value;
-
-      const knowledgeTransfer = document.getElementById("knowledgeTransfer")?.value || "";
-      const qualityPlan = document.getElementById("qualityPlan")?.value || "";
-      const riskManagement = document.getElementById("riskManagement")?.value || "";
-
-      const hsePolicy = document.getElementById("hsePolicy")?.value || "";
-      const hseRisk = document.getElementById("hseRisk")?.value || "";
-      const hsePlan = document.getElementById("hsePlan")?.value || "";
-
-      const box = document.getElementById("reviewBox");
-
-      box.innerHTML = `
-        <h3 style="margin-top:0;">${title || "عنوان المشروع"}</h3>
-        <p><strong>الجهة:</strong> ${client || "—"}</p>
-        <p><strong>مدة المشروع:</strong> ${duration ? duration + " شهراً" : "—"}</p>
-
-        <hr/>
-
-        <h4>المقدمة</h4>
-        <p>${intro || "<span style='color:#9ca3af;'>لم يتم إدخال مقدمة بعد.</span>"}</p>
-
-        <h4>الفهم العام لنطاق العمل</h4>
-        <p>${understanding || "<span style='color:#9ca3af;'>لم يتم إدخال الفهم العام بعد.</span>"}</p>
-
-        <h4>أهداف المشروع</h4>
-        <p>${objectives || "<span style='color:#9ca3af;'>لم يتم إدخال الأهداف بعد.</span>"}</p>
-
-        <h4>الملخص التنفيذي</h4>
-        <p>${summary || "<span style='color:#9ca3af;'>لم يتم إدخال الملخص التنفيذي بعد.</span>"}</p>
-
-        <hr/>
-
-        <h4>آلية نقل المعرفة</h4>
-        <p>${knowledgeTransfer || "<span style='color:#9ca3af;'>لم يتم إدخال آلية نقل المعرفة بعد.</span>"}</p>
-
-        <h4>خطة إدارة الجودة</h4>
-        <p>${qualityPlan || "<span style='color:#9ca3af;'>لم يتم إدخال خطة الجودة بعد.</span>"}</p>
-
-        <h4>إدارة المخاطر (غير السلامة)</h4>
-        <p>${riskManagement || "<span style='color:#9ca3af;'>لم يتم إدخال خطة إدارة المخاطر بعد.</span>"}</p>
-
-        <hr/>
-
-        <h4>خطة السلامة والصحة المهنية (HSE)</h4>
-        <p><strong>السياسة:</strong><br>${hsePolicy || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
-        <p><strong>إدارة المخاطر:</strong><br>${hseRisk || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
-        <p><strong>خطة الطوارئ:</strong><br>${hsePlan || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
-
-        <p style="color:#6b7280; margin-top:10px;">
-          سيتم لاحقاً إضافة ملخص للمراحل، الخبرات، فريق العمل، والوثائق ضمن هذه المعاينة.
-        </p>
+          </thead>
+          <tbody>
       `;
-    }
 
-    // عرض أسماء الملفات المرفوعة محلياً في خطوة الوثائق
-    const docUploadInput = document.getElementById("docUpload");
-    if (docUploadInput) {
-      docUploadInput.addEventListener("change", () => {
-        const list = document.getElementById("localDocsList");
-        list.innerHTML = "";
-        Array.from(docUploadInput.files).forEach(f => {
-          const li = document.createElement("li");
-          li.textContent = "📎 " + f.name;
-          list.appendChild(li);
-        });
+      json.table.rows.forEach((r, i) => {
+        const m = r.c.map(c => c ? c.v : "");
+
+        html += `
+          <tr>
+            <td><input type="checkbox" data-team-index="${i}" /></td>
+            <td>${m[0]}</td>
+            <td>${m[1]}</td>
+            <td>${m[2]}</td>
+            <td>${m[3]}</td>
+          </tr>
+        `;
       });
+
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+
+    } catch (err) {
+      container.innerHTML = `<span style="color:red;">تعذر تحميل الفريق</span>`;
+    }
+  }
+
+  async function loadCompanyDocs() {
+    const container = document.getElementById("docsContainer");
+    container.innerHTML = "جاري التحميل...";
+
+    try {
+      const sheetId = "SHEET_ID";
+      const tab = "Company_Docs";
+
+      const url =
+        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
+
+      const res = await fetch(url);
+      const text = await res.text();
+      const json = JSON.parse(text.substring(47, text.length - 2));
+
+      let html = `
+        <table class="proposal-table" style="margin-top:6px;">
+          <thead>
+            <tr>
+              <th>اختيار</th>
+              <th>اسم الوثيقة</th>
+              <th>النوع</th>
+              <th>الوصف</th>
+            </tr>
+          </thead>
+          <tbody>
+      `;
+
+      json.table.rows.forEach((r, i) => {
+        const d = r.c.map(c => c ? c.v : "");
+
+        html += `
+          <tr>
+            <td><input type="checkbox" data-doc-index="${i}" /></td>
+            <td>${d[0]}</td>
+            <td>${d[1]}</td>
+            <td>${d[2]}</td>
+          </tr>
+        `;
+      });
+
+      html += `</tbody></table>`;
+      container.innerHTML = html;
+
+    } catch (err) {
+      container.innerHTML = `<span style="color:red;">تعذر تحميل الوثائق</span>`;
+    }
+  }
+
+  function generatePreview() {
+    const title = document.getElementById("pTitle").value;
+    const client = document.getElementById("pClient").value;
+    const duration = document.getElementById("pDuration").value;
+
+    const intro = document.getElementById("pIntro").value;
+    const understanding = document.getElementById("pUnderstanding").value;
+    const objectives = document.getElementById("pObjectives").value;
+    const summary = document.getElementById("pExecSummary").value;
+
+    const knowledgeTransfer = document.getElementById("knowledgeTransfer")?.value || "";
+    const qualityPlan = document.getElementById("qualityPlan")?.value || "";
+    const riskManagement = document.getElementById("riskManagement")?.value || "";
+
+    const hsePolicy = document.getElementById("hsePolicy")?.value || "";
+    const hseRisk = document.getElementById("hseRisk")?.value || "";
+    const hsePlan = document.getElementById("hsePlan")?.value || "";
+
+    const box = document.getElementById("reviewBox");
+
+    box.innerHTML = `
+      <h3 style="margin-top:0;">${title || "عنوان المشروع"}</h3>
+      <p><strong>الجهة:</strong> ${client || "—"}</p>
+      <p><strong>مدة المشروع:</strong> ${duration ? duration + " شهراً" : "—"}</p>
+
+      <hr/>
+
+      <h4>المقدمة</h4>
+      <p>${intro || "<span style='color:#9ca3af;'>لم يتم إدخال مقدمة بعد.</span>"}</p>
+
+      <h4>الفهم العام لنطاق العمل</h4>
+      <p>${understanding || "<span style='color:#9ca3af;'>لم يتم إدخال الفهم العام بعد.</span>"}</p>
+
+      <h4>أهداف المشروع</h4>
+      <p>${objectives || "<span style='color:#9ca3af;'>لم يتم إدخال الأهداف بعد.</span>"}</p>
+
+      <h4>الملخص التنفيذي</h4>
+      <p>${summary || "<span style='color:#9ca3af;'>لم يتم إدخال الملخص التنفيذي بعد.</span>"}</p>
+
+      <hr/>
+
+      <h4>آلية نقل المعرفة</h4>
+      <p>${knowledgeTransfer || "<span style='color:#9ca3af;'>لم يتم إدخال آلية نقل المعرفة بعد.</span>"}</p>
+
+      <h4>خطة إدارة الجودة</h4>
+      <p>${qualityPlan || "<span style='color:#9ca3af;'>لم يتم إدخال خطة الجودة بعد.</span>"}</p>
+
+      <h4>إدارة المخاطر (غير السلامة)</h4>
+      <p>${riskManagement || "<span style='color:#9ca3af;'>لم يتم إدخال خطة إدارة المخاطر بعد.</span>"}</p>
+
+      <hr/>
+
+      <h4>خطة السلامة والصحة المهنية (HSE)</h4>
+      <p><strong>السياسة:</strong><br>${hsePolicy || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+      <p><strong>إدارة المخاطر:</strong><br>${hseRisk || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+      <p><strong>خطة الطوارئ:</strong><br>${hsePlan || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+
+      <p style="color:#6b7280; margin-top:10px;">
+        سيتم لاحقاً إضافة ملخص للمراحل، الخبرات، فريق العمل، والوثائق ضمن هذه المعاينة.
+      </p>
+    `;
+  }
+
+  const docUploadInput = document.getElementById("docUpload");
+  if (docUploadInput) {
+    docUploadInput.addEventListener("change", () => {
+      const list = document.getElementById("localDocsList");
+      list.innerHTML = "";
+      Array.from(docUploadInput.files).forEach(f => {
+        const li = document.createElement("li");
+        li.textContent = "📎 " + f.name;
+        list.appendChild(li);
+      });
+    });
+  }
+
+  function exportProposalPDF() {
+    const cover = document.querySelector(".cover-a4");
+    const review = document.getElementById("reviewBox");
+
+    if (!cover || !review) {
+      alert("لا يمكن العثور على محتوى التصدير.");
+      return;
     }
 
-    function exportProposalPDF() {
-      const cover = document.querySelector(".cover-a4");
-      const review = document.getElementById("reviewBox");
+    const wrapper = document.createElement("div");
+    wrapper.style.padding = "20px";
+    wrapper.appendChild(cover.cloneNode(true));
 
-      if (!cover || !review) {
-        alert("لا يمكن العثور على محتوى التصدير.");
-        return;
-      }
+    const separator = document.createElement("hr");
+    separator.style.margin = "24px 0";
+    wrapper.appendChild(separator);
 
-      const wrapper = document.createElement("div");
-      wrapper.style.padding = "20px";
-      wrapper.appendChild(cover.cloneNode(true));
+    const reviewClone = review.cloneNode(true);
+    wrapper.appendChild(reviewClone);
 
-      const separator = document.createElement("hr");
-      separator.style.margin = "24px 0";
-      wrapper.appendChild(separator);
+    const opt = {
+      margin: 10,
+      filename: 'Tilad_Technical_Proposal.pdf',
+      image: { type: 'jpeg', quality: 0.95 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
 
-      const reviewClone = review.cloneNode(true);
-      wrapper.appendChild(reviewClone);
+    html2pdf().set(opt).from(wrapper).save();
+  }
+</script>
 
-      const opt = {
-        margin: 10,
-        filename: 'Tilad_Technical_Proposal.pdf',
-        image: { type: 'jpeg', quality: 0.95 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      html2pdf().set(opt).from(wrapper).save();
-    }
-  </script>
-
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPVb9C1KZx2drXr/9YJ4BcC2pN4uCISEWvZ3p4SbRzczNlEGnsxW0t3z9zJrB1iRaYqZ7uW2kVj2r7Uq2Og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPVb9C1KZx2drXr/9YJ4BcC2pN4uCISEWvZ3p4SbRzczNlEGnsxW0t3z9zJrB1iRaYqZ7uW2kVj2r7Uq2Og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
