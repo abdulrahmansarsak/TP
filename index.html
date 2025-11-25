@@ -24,9 +24,7 @@
       --transition-fast: 0.2s ease;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       margin: 0;
@@ -37,8 +35,6 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* ====== الهيكل العام ====== */
 
     .app-shell {
       display: flex;
@@ -125,7 +121,11 @@
       cursor: pointer;
       border: none;
       outline: none;
-      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+      transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background var(--transition-fast),
+        color var(--transition-fast);
     }
 
     .primary-btn {
@@ -213,17 +213,8 @@
       color: var(--text-muted);
     }
 
-    /* ====== عرض / إخفاء المشاهد ====== */
-
-    .view {
-      display: none;
-    }
-
-    .view.active {
-      display: block;
-    }
-
-    /* ====== قائمة العروض (Dashboard) ====== */
+    .view { display: none; }
+    .view.active { display: block; }
 
     .kpis {
       display: grid;
@@ -274,9 +265,7 @@
       background: #f8fafc;
     }
 
-    .proposal-table tr:last-child td {
-      border-bottom: none;
-    }
+    .proposal-table tr:last-child td { border-bottom: none; }
 
     .status-pill {
       padding: 3px 8px;
@@ -316,8 +305,6 @@
       background: linear-gradient(90deg, var(--tilad-teal), var(--tilad-purple));
       width: 0;
     }
-
-    /* ====== الـ Wizard ====== */
 
     .wizard-steps {
       display: flex;
@@ -368,7 +355,7 @@
       border: 1px solid var(--border-soft);
       background: #f9fafb;
       padding: 14px 14px 16px;
-      max-height: 430px;
+      max-height: 520px;
       overflow: auto;
     }
 
@@ -413,7 +400,7 @@
     }
 
     .field textarea {
-      min-height: 70px;
+      min-height: 120px;
       resize: vertical;
     }
 
@@ -455,11 +442,7 @@
       cursor: default;
     }
 
-    /* ====== غلاف العرض الفني (Cover) ====== */
-
-    .cover-card {
-      margin-top: 6px;
-    }
+    .cover-card { margin-top: 6px; }
 
     .cover-preview {
       border-radius: var(--radius-md);
@@ -473,7 +456,7 @@
     .cover-a4 {
       width: 100%;
       max-width: 620px;
-      aspect-ratio: 1 / 1.414; /* تقريب A4 */
+      aspect-ratio: 1 / 1.414;
       background: #ffffff;
       margin-inline: auto;
       border-radius: 12px;
@@ -579,9 +562,7 @@
       margin-top: 8px;
     }
 
-    .cover-footer-right {
-      text-align: left;
-    }
+    .cover-footer-right { text-align: left; }
 
     .cover-accent-shape {
       position: absolute;
@@ -589,8 +570,9 @@
       inset-block-end: 0;
       width: 45%;
       height: 32%;
-      background: radial-gradient(circle at 0 0, rgba(148, 163, 184, 0.1), transparent 60%),
-                  radial-gradient(circle at 100% 100%, rgba(74, 90, 136, 0.14), transparent 65%);
+      background:
+        radial-gradient(circle at 0 0, rgba(148, 163, 184, 0.1), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(74, 90, 136, 0.14), transparent 65%);
       border-bottom-right-radius: inherit;
       border-top-left-radius: 36px;
       pointer-events: none;
@@ -602,42 +584,33 @@
       color: var(--text-muted);
       text-align: center;
     }
-    /* تكبير بطاقة المعالج الفني فقط */
-.wizard-card {
-  max-width: 920px;
-  margin-inline: auto;
-}
 
-/* في الشاشات الصغيرة نرجع للحجم العادي */
-@media (max-width: 900px) {
-  .wizard-card {
-    max-width: 100%;
-  }
-}
+    .wizard-card {
+      max-width: 920px;
+      margin-inline: auto;
+    }
 
+    @media (max-width: 900px) {
+      .wizard-card { max-width: 100%; }
+    }
   </style>
 </head>
 <body>
   <div class="app-shell">
-    <!-- ====== الهيدر ====== -->
     <header class="app-header">
       <div class="brand">
-        <div class="brand-logo">
-          <!-- ضع مسار شعار حلول تلاد المتكاملة هنا -->
-          <!-- <img src="tilad-logo.png" alt="Tilad Integrated Solutions Logo" /> -->
-        </div>
+        <div class="brand-logo"></div>
         <div class="brand-text">
           <div class="brand-text-main">نظام إعداد العروض الفنية</div>
           <div class="brand-text-sub">شركة حلول تلاد المتكاملة | Tilad Integrated Solutions Company</div>
-          <div class="brand-text-sub">
-            تصميم وتطوير: د. عبدالرحمن سرسك
+          <div class="brand-text-sub">تصميم وتطوير: د. عبدالرحمن سرسك</div>
         </div>
       </div>
 
       <div class="header-actions">
         <span class="badge">نسخة تجريبية v0.1 – عرض فني فقط</span>
         <button class="primary-btn" type="button" onclick="showView('wizard')">
-  العرض الفني الحالي
+          العرض الفني الحالي
         </button>
         <button class="primary-btn" type="button" onclick="startNewProposal()">
           + إنشاء عرض فني جديد
@@ -645,16 +618,11 @@
       </div>
     </header>
 
-    <!-- ====== المحتوى الرئيسي ====== -->
     <main class="app-main">
       <div class="main-inner">
-
-        <!-- ====== عرض لوحة العروض (Dashboard) ====== -->
+        <!-- لوحة العروض -->
         <section id="dashboardView" class="view">
-          <!--
           <div class="card">
-            </div>
-            -->
             <div class="card-header">
               <div>
                 <div class="card-title">
@@ -700,14 +668,11 @@
                 </tr>
               </thead>
               <tbody id="proposalTableBody">
-                <!-- سيتم تعبئة هذه البيانات لاحقًا من Google Sheet -->
                 <tr>
                   <td>مثال تجريبي: مشروع رصد الحياة الفطرية</td>
                   <td>المركز الوطني لتنمية الحياة الفطرية</td>
                   <td>2025-12-31</td>
-                  <td>
-                    <span class="status-pill status-inprogress">قيد الإعداد</span>
-                  </td>
+                  <td><span class="status-pill status-inprogress">قيد الإعداد</span></td>
                   <td>
                     <div class="progress-bar">
                       <div class="progress-bar-inner" style="width: 42%;"></div>
@@ -718,9 +683,7 @@
                   <td>مثال تجريبي: مشروع تحسين الغطاء النباتي في المراعي</td>
                   <td>وزارة البيئة والمياه والزراعة</td>
                   <td>2025-11-10</td>
-                  <td>
-                    <span class="status-pill status-draft">مسودة أولية</span>
-                  </td>
+                  <td><span class="status-pill status-draft">مسودة أولية</span></td>
                   <td>
                     <div class="progress-bar">
                       <div class="progress-bar-inner" style="width: 18%;"></div>
@@ -731,7 +694,7 @@
             </table>
           </div>
 
-          <!-- بطاقة الغلاف في لوحة التحكم لعرض مثال سريع -->
+          <!-- معاينة الغلاف -->
           <div class="card cover-card">
             <div class="card-header">
               <div>
@@ -789,7 +752,7 @@
                     <div>إعداد:</div>
                     <div><strong>إدارة تطوير الأعمال والمنافسات</strong></div>
                     <div>شركة حلول تلاد المتكاملة</div>
-                     <div>بإشراف: د. عبدالرحمن سرسك</div>
+                    <div>بإشراف: د. عبدالرحمن سرسك</div>
                   </div>
                   <div class="cover-footer-right">
                     <div>الرياض – المملكة العربية السعودية</div>
@@ -803,7 +766,7 @@
           </div>
         </section>
 
-        <!-- ====== الـ Wizard (إنشاء / تعديل عرض) ====== -->
+        <!-- الـ Wizard -->
         <section id="wizardView" class="view active">
           <div class="card wizard-card">
             <div class="card-header">
@@ -818,7 +781,6 @@
               </div>
             </div>
 
-            <!-- شريط الخطوات -->
             <div class="wizard-steps">
               <button class="wizard-step-chip active" data-step="1" onclick="goToStep(1)">
                 <span class="idx">1</span> بيانات المنافسة
@@ -833,29 +795,22 @@
                 <span class="idx">4</span> الخبرات السابقة
               </button>
               <button class="wizard-step-chip" data-step="5" onclick="goToStep(5)">
-                <span class="idx">5</span> فريق العمل
+                <span class="idx">5</span> فريق العمل والخبراء
               </button>
               <button class="wizard-step-chip" data-step="6" onclick="goToStep(6)">
                 <span class="idx">6</span> خطة السلامة
               </button>
               <button class="wizard-step-chip" data-step="7" onclick="goToStep(7)">
-                <span class="idx">7</span> وثائق الشركة
-              </button>
-              <button class="wizard-step-chip" data-step="8" onclick="goToStep(8)">
-                <span class="idx">8</span> المراجعة والتصدير
+                <span class="idx">7</span> المراجعة والتصدير
               </button>
             </div>
 
-            <!-- جسم الـ Wizard -->
             <div class="wizard-body">
-
               <!-- الخطوة 1 -->
               <div class="wizard-step-panel" data-step-panel="1">
                 <div class="form-grid">
                   <div class="field">
-                    <label for="pTitle">
-                      اسم المنافسة
-                    </label>
+                    <label for="pTitle">اسم المنافسة</label>
                     <input id="pTitle" type="text" placeholder="مثال: مشروع رصد الحياة الفطرية في ..." />
                     <small>اكتب الاسم كما هو في منصة المنافسة (اعتماد / نافس).</small>
                   </div>
@@ -966,7 +921,6 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <!-- صف تجريبي كبداية -->
                       <tr>
                         <td>1</td>
                         <td><input type="text" value="مرحلة التحضير والانطلاق" /></td>
@@ -977,11 +931,13 @@
                       </tr>
                     </tbody>
                   </table>
+
                   <div style="margin-top:12px;">
-                  <button type="button" class="secondary-btn" onclick="generateGanttFromPhases()">
-                    📊 إنشاء مخطط Gantt من المراحل
-                  </button>
-                </div>
+                    <button type="button" class="secondary-btn" onclick="generateGanttFromPhases()">
+                      📊 إنشاء مخطط Gantt من المراحل
+                    </button>
+                  </div>
+
                   <hr style="margin:14px 0; border:none; border-top:1px solid #e5e7eb;" />
 
                   <div class="field">
@@ -1002,62 +958,106 @@
                       placeholder="حدد المخاطر الرئيسة للمشروع (التأخير، توفر البيانات، الموافقات...) وآلية التعامل معها: تجنب، تخفيف، نقل، قبول."></textarea>
                   </div>
 
-                <div id="ganttContainer" style="margin-top:10px; border-radius:12px; border:1px solid #e5e7eb; background:white; padding:10px; max-height:260px; overflow:auto;">
-                  <p style="font-size:0.78rem; color:#6b7280; margin:0;">
-                    سيتم عرض مخطط زمني مبسط للمراحل هنا بعد إدخال تواريخ البداية والنهاية.
-                  </p>
-                </div>
-
+                  <div id="ganttContainer" style="margin-top:10px; border-radius:12px; border:1px solid #e5e7eb; background:white; padding:10px; max-height:260px; overflow:auto;">
+                    <p style="font-size:0.78rem; color:#6b7280; margin:0;">
+                      سيتم عرض مخطط زمني مبسط للمراحل هنا بعد إدخال تواريخ البداية والنهاية.
+                    </p>
+                  </div>
                 </div>
 
                 <p style="font-size:0.8rem; color:var(--text-muted); margin-top:10px;">
                   <strong>ملاحظة:</strong> في الإصدارات القادمة سيتم توليد مخطط Gantt تلقائيًا اعتمادًا على هذه التواريخ.
                 </p>
               </div>
-              <!-- الخطوة 4 -->
+
+              <!-- الخطوة 4: الخبرات السابقة (يدوي) -->
               <div class="wizard-step-panel" data-step-panel="4" style="display:none;">
-
                 <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0; margin-bottom:10px;">
-                  اختر الخبرات السابقة المناسبة لإرفاقها داخل العرض الفني.  
-                  سيتم قراءة المشاريع من ورقة <strong>Experience_Projects</strong> في Google Sheet.
+                  أدخل الخبرات السابقة المناسبة للمنافسة الحالية (مشاريع نفذتها تلاد أو المجموعة).
                 </p>
 
-                <button type="button" class="secondary-btn" onclick="loadExperienceProjects()">
-                  🔄 تحميل الخبرات من Google Sheet
-                </button>
-
-                <div id="expProjectsContainer" style="margin-top:14px;">
-                  <p style="color:#6b7280; font-size:0.8rem;">اضغط على الزر أعلاه لعرض المشاريع.</p>
+                <div class="field">
+                  <button type="button" class="secondary-btn" onclick="addExperienceRow()">
+                    + إضافة مشروع خبرة
+                  </button>
                 </div>
 
+                <div style="overflow:auto;">
+                  <table class="proposal-table" id="expTable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>اسم المشروع</th>
+                        <th>الجهة</th>
+                        <th>السنة</th>
+                        <th>وصف مختصر</th>
+                        <th>حذف</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td><input type="text" placeholder="مثال: مشروع رصد الحياة الفطرية" /></td>
+                        <td><input type="text" placeholder="اسم الجهة" /></td>
+                        <td><input type="text" placeholder="2024" /></td>
+                        <td><input type="text" placeholder="نبذة مختصرة عن نطاق المشروع." /></td>
+                        <td><button type="button" class="secondary-btn" onclick="deleteExpRow(this)">✕</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-              <!-- الخطوة 5 -->
+
+              <!-- الخطوة 5: فريق العمل والخبراء (يدوي) -->
               <div class="wizard-step-panel" data-step-panel="5" style="display:none;">
-
                 <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0; margin-bottom:10px;">
-                  اختر أعضاء فريق العمل الذين سيشاركون في تنفيذ المشروع.
+                  أدخل بيانات فريق العمل والخبراء المشاركين في تنفيذ المشروع.
                 </p>
 
-                <button type="button" class="secondary-btn" onclick="loadTeamMembers()">
-                  👥 تحميل فريق العمل من Google Sheet
-                </button>
-                <div class="field" style="margin-top:10px;">
-                <label for="cvUpload">رفع CV إضافي (اختياري)</label>
-                <input id="cvUpload" type="file" />
-                <small>لاستخدامه عند إعداد العرض، الملفات لا تُرفع للسحابة في هذه النسخة.</small>
-              </div>
-
-                <div id="teamMembersContainer" style="margin-top:14px;">
-                  <p style="color:#6b7280; font-size:0.8rem;">اضغط على الزر لعرض أعضاء الفريق.</p>
+                <div class="field">
+                  <button type="button" class="secondary-btn" onclick="addExpertRow()">
+                    + إضافة خبير / عضو فريق
+                  </button>
                 </div>
 
-              </div>
-              <!-- الخطوة 6 -->
-              <div class="wizard-step-panel" data-step-panel="6" style="display:none;">
+                <div style="overflow:auto; margin-bottom:10px;">
+                  <table class="proposal-table" id="expertsTable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>اسم الخبير</th>
+                        <th>المؤهل</th>
+                        <th>المنصب في المشروع</th>
+                        <th>سنوات الخبرة</th>
+                        <th>نبذة مختصرة</th>
+                        <th>حذف</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td><input type="text" placeholder="اسم الخبير" /></td>
+                        <td><input type="text" placeholder="مثال: دكتوراه / ماجستير ..." /></td>
+                        <td><input type="text" placeholder="مثال: مدير المشروع" /></td>
+                        <td><input type="number" min="0" placeholder="15" /></td>
+                        <td><input type="text" placeholder="نبذة قصيرة عن الخبرة." /></td>
+                        <td><button type="button" class="secondary-btn" onclick="deleteExpertRow(this)">✕</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
 
+                <div class="field">
+                  <label for="cvUpload">رفع CV إضافي (اختياري)</label>
+                  <input id="cvUpload" type="file" multiple />
+                  <small>لن تُرفع هذه الملفات إلى الإنترنت؛ للاستخدام الداخلي فقط عند تجهيز العرض.</small>
+                </div>
+              </div>
+
+              <!-- الخطوة 6: خطة السلامة -->
+              <div class="wizard-step-panel" data-step-panel="6" style="display:none;">
                 <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0; margin-bottom:10px;">
-                  أدخل معلومات خطة السلامة والصحة المهنية الخاصة بالمشروع.  
-                  هذا القسم يتم تضمينه بالكامل في العرض الفني.
+                  أدخل معلومات خطة السلامة والصحة المهنية الخاصة بالمشروع.
                 </p>
 
                 <div class="field">
@@ -1079,38 +1079,12 @@
                   <label>أدوار ومسؤوليات السلامة</label>
                   <textarea id="hseRoles" placeholder="من هو مسؤول HSE؟ ما هي مسؤوليات كل عضو؟"></textarea>
                 </div>
-
               </div>
-              <!-- الخطوة 7 -->
+
+              <!-- الخطوة 7: المراجعة والتصدير -->
               <div class="wizard-step-panel" data-step-panel="7" style="display:none;">
-
-                <p style="font-size:0.82rem; color:var(--text-muted); margin-top:0; margin-bottom:12px;">
-                  أرفق أو اختر الوثائق الرسمية التي سيتم تضمينها في العرض الفني.
-                  هذه الوثائق تأتي من الورقة <strong>Company_Docs</strong> في Google Sheet.
-                </p>
-
-                <button type="button" class="secondary-btn" onclick="loadCompanyDocs()">
-                  📄 تحميل وثائق الشركة من Google Sheet
-                </button>
-                <div class="field" style="margin-top:10px;">
-                <label for="docUpload">رفع ملفات إضافية (داخلي فقط)</label>
-                <input id="docUpload" type="file" multiple />
-                <small>يمكنك اختيار ملفات من جهازك؛ ستظهر أسماؤها في قائمة الوثائق (لن تُرفع إلى السحابة في هذه النسخة).</small>
-              </div>
-
-<ul id="localDocsList" style="margin-top:8px; font-size:0.78rem; color:#4b5563; padding-right:16px;"></ul>
-
-                <div id="docsContainer" style="margin-top:14px;">
-                  <p style="color:#6b7280; font-size:0.8rem;">اضغط على زر التحميل لعرض الوثائق.</p>
-                </div>
-
-              </div>
-              <!-- الخطوة 8 -->
-              <div class="wizard-step-panel" data-step-panel="8" style="display:none;">
-
                 <p style="font-size:0.84rem; color:var(--text-muted); margin-top:0; margin-bottom:12px;">
-                  في هذه المرحلة يمكنك مراجعة جميع محتويات العرض الفني قبل التصدير.
-                  لاحقاً سيتم إضافة التصدير PDF والمشاركة عبر رابط.
+                  في هذه المرحلة يمكنك مراجعة جميع محتويات العرض الفني قبل التصدير إلى PDF.
                 </p>
 
                 <div id="reviewBox" style="
@@ -1118,7 +1092,7 @@
                   border:1px solid #d1d5db;
                   border-radius:12px;
                   padding:14px;
-                  max-height:330px;
+                  max-height:420px;
                   overflow:auto;
                   font-size:0.84rem;
                 ">
@@ -1130,18 +1104,14 @@
                 </button>
 
                 <button class="secondary-btn" style="margin-top:8px;" onclick="exportProposalPDF()">
-               📄 تصدير العرض الفني PDF
+                  📄 تصدير العرض الفني PDF
                 </button>
-
-
               </div>
-
-              <!-- الخطوات 4–8 سيتم إضافتها لاحقًا بالتفصيل -->
             </div>
 
             <div class="wizard-footer">
               <div class="wizard-footer-left">
-                <span id="wizardStepLabel">الخطوة 1 من 3 (مرحلة تجريبية)</span>
+                <span id="wizardStepLabel">الخطوة 1 من 7 (مرحلة تجريبية)</span>
               </div>
               <div>
                 <button class="secondary-btn" type="button" id="prevBtn" onclick="prevStep()" disabled>السابق</button>
@@ -1150,7 +1120,6 @@
             </div>
           </div>
         </section>
-
       </div>
     </main>
 
@@ -1158,437 +1127,405 @@
       هذا النموذج جزء من مبادرة تطوير الأعمال في شركة حلول تلاد المتكاملة – إعداد وتصميم: د. عبدالرحمن سرسك بالتعاون مع الذكاء الاصطناعي.
     </footer>
   </div>
-
   <script>
-  // حالة الـ Wizard
-  let currentStep = 1;
-  const maxStepExperimental = 8;
+    // عدد الخطوات الحالي
+    let currentStep = 1;
+    const maxStepExperimental = 7;
 
-  document.addEventListener("DOMContentLoaded", () => {
-    const titleInput = document.getElementById("pTitle");
-    const clientInput = document.getElementById("pClient");
-    const refInput = document.getElementById("pRef");
-    const closingInput = document.getElementById("pClosing");
-    const durationInput = document.getElementById("pDuration");
-    const platformSelect = document.getElementById("pPlatform");
+    // تحديث الغلاف حسب الحقول
+    document.addEventListener("DOMContentLoaded", () => {
+      const titleInput = document.getElementById("pTitle");
+      const clientInput = document.getElementById("pClient");
+      const refInput = document.getElementById("pRef");
+      const closingInput = document.getElementById("pClosing");
+      const durationInput = document.getElementById("pDuration");
+      const platformSelect = document.getElementById("pPlatform");
 
-    function updateCover() {
-      if (titleInput) document.getElementById("coverProjectTitle").textContent = titleInput.value || "عنوان المشروع";
-      if (clientInput) document.getElementById("coverClient").innerHTML =
-        `مقدم إلى: <strong>${clientInput.value || "اسم الجهة"}</strong>`;
-      if (refInput) document.getElementById("coverRef").textContent = refInput.value || "—";
-      if (closingInput) document.getElementById("coverClosing").textContent = closingInput.value || "—";
-      if (durationInput) document.getElementById("coverDuration").textContent =
-        (durationInput.value ? durationInput.value + " شهرًا" : "—");
-      if (platformSelect) document.getElementById("coverPlatform").textContent =
-        platformSelect.value || "—";
-    }
+      function updateCover() {
+        if (titleInput)
+          document.getElementById("coverProjectTitle").textContent =
+            titleInput.value || "عنوان المشروع";
 
-    [titleInput, clientInput, refInput, closingInput, durationInput, platformSelect].forEach(el => {
-      if (el) el.addEventListener("input", updateCover);
-      if (el && el.tagName === "SELECT") el.addEventListener("change", updateCover);
-    });
+        if (clientInput)
+          document.getElementById("coverClient").innerHTML =
+            `مقدم إلى: <strong>${clientInput.value || "اسم الجهة"}</strong>`;
 
-    updateCover();
-  });
+        if (refInput)
+          document.getElementById("coverRef").textContent =
+            refInput.value || "—";
 
-  function showView(view) {
-    document.getElementById('dashboardView').classList.remove('active');
-    document.getElementById('wizardView').classList.remove('active');
+        if (closingInput)
+          document.getElementById("coverClosing").textContent =
+            closingInput.value || "—";
 
-    if (view === 'dashboard') {
-      document.getElementById('dashboardView').classList.add('active');
-    } else if (view === 'wizard') {
-      document.getElementById('wizardView').classList.add('active');
-    }
-  }
+        if (durationInput)
+          document.getElementById("coverDuration").textContent =
+            (durationInput.value ? durationInput.value + " شهرًا" : "—");
 
-  function startNewProposal() {
-    showView('wizard');
-    goToStep(1);
-  }
-
-  function goToStep(step) {
-    if (step < 1 || step > maxStepExperimental) return;
-    currentStep = step;
-
-    document.querySelectorAll('.wizard-step-panel').forEach(panel => {
-      const s = Number(panel.getAttribute('data-step-panel'));
-      panel.style.display = (s === step) ? 'block' : 'none';
-    });
-
-    document.querySelectorAll('.wizard-step-chip').forEach(chip => {
-      const s = Number(chip.getAttribute('data-step'));
-      chip.classList.toggle('active', s === step);
-    });
-
-    document.getElementById('prevBtn').disabled = (step === 1);
-    document.getElementById('nextBtn').textContent = (step === maxStepExperimental) ? 'حفظ (نسخة تجريبية)' : 'التالي';
-
-    document.getElementById('wizardStepLabel').textContent =
-      `الخطوة ${step} من ${maxStepExperimental} (مرحلة تجريبية)`;
-  }
-
-  function nextStep() {
-    if (currentStep < maxStepExperimental) {
-      goToStep(currentStep + 1);
-    } else {
-      alert('سيتم في الإصدارات القادمة حفظ بيانات العرض الفني إلى Google Sheet وربطها بالتقارير والغلاف.');
-    }
-  }
-
-  function prevStep() {
-    if (currentStep > 1) {
-      goToStep(currentStep - 1);
-    }
-  }
-
-  function addPhaseRow() {
-    const tbody = document.querySelector('#phasesTable tbody');
-    const rowCount = tbody.rows.length + 1;
-    const tr = document.createElement('tr');
-
-    tr.innerHTML = `
-      <td>${rowCount}</td>
-      <td><input type="text" placeholder="اسم المرحلة" /></td>
-      <td><input type="text" placeholder="وصف مختصر" /></td>
-      <td><input type="date" /></td>
-      <td><input type="date" /></td>
-      <td><button type="button" class="secondary-btn" onclick="deletePhaseRow(this)">✕</button></td>
-    `;
-    tbody.appendChild(tr);
-  }
-
-  function deletePhaseRow(btn) {
-    const row = btn.closest('tr');
-    row.remove();
-    document.querySelectorAll('#phasesTable tbody tr').forEach((tr, idx) => {
-      tr.cells[0].textContent = idx + 1;
-    });
-  }
-
-  function generateGanttFromPhases() {
-    const container = document.getElementById("ganttContainer");
-    const rows = document.querySelectorAll("#phasesTable tbody tr");
-    const phases = [];
-
-    rows.forEach(row => {
-      const name = row.cells[1].querySelector("input").value;
-      const desc = row.cells[2].querySelector("input").value;
-      const start = row.cells[3].querySelector("input").value;
-      const end = row.cells[4].querySelector("input").value;
-
-      if (name && start && end) {
-        phases.push({ name, desc, start: new Date(start), end: new Date(end) });
+        if (platformSelect)
+          document.getElementById("coverPlatform").textContent =
+            platformSelect.value || "—";
       }
+
+      [titleInput, clientInput, refInput, closingInput, durationInput, platformSelect].forEach(el => {
+        if (!el) return;
+        if (el.tagName === "SELECT") {
+          el.addEventListener("change", updateCover);
+        } else {
+          el.addEventListener("input", updateCover);
+        }
+      });
+
+      updateCover();
     });
 
-    if (!phases.length) {
-      container.innerHTML = `<p style="font-size:0.8rem; color:#b91c1c;">الرجاء إدخال اسم وتواريخ البداية والنهاية لمرحلة واحدة على الأقل.</p>`;
-      return;
+    function showView(view) {
+      document.getElementById("dashboardView").classList.remove("active");
+      document.getElementById("wizardView").classList.remove("active");
+
+      if (view === "dashboard") {
+        document.getElementById("dashboardView").classList.add("active");
+      } else {
+        document.getElementById("wizardView").classList.add("active");
+      }
     }
 
-    const minDate = new Date(Math.min(...phases.map(p => p.start.getTime())));
-    const maxDate = new Date(Math.max(...phases.map(p => p.end.getTime())));
-    const totalDays = Math.max(1, Math.round((maxDate - minDate) / (1000 * 60 * 60 * 24)));
+    function startNewProposal() {
+      showView("wizard");
+      goToStep(1);
+    }
 
-    let html = `
-      <div style="font-size:0.78rem; color:#4b5563; margin-bottom:6px;">
-        من ${minDate.toLocaleDateString("ar-SA")} إلى ${maxDate.toLocaleDateString("ar-SA")} (${totalDays} يومياً تقريباً)
-      </div>
-      <div style="display:flex; flex-direction:column; gap:4px;">
-    `;
+    function goToStep(step) {
+      if (step < 1 || step > maxStepExperimental) return;
+      currentStep = step;
 
-    phases.forEach((p, idx) => {
-      const offsetDays = Math.round((p.start - minDate) / (1000 * 60 * 60 * 24));
-      const phaseDays = Math.max(1, Math.round((p.end - p.start) / (1000 * 60 * 60 * 24)));
-      const leftPercent = (offsetDays / totalDays) * 100;
-      const widthPercent = (phaseDays / totalDays) * 100;
+      document.querySelectorAll(".wizard-step-panel").forEach(panel => {
+        const s = Number(panel.getAttribute("data-step-panel"));
+        panel.style.display = (s === step) ? "block" : "none";
+      });
 
-      html += `
-        <div>
-          <div style="display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:2px;">
-            <span>${idx + 1}. ${p.name}</span>
-            <span>${p.start.toLocaleDateString("ar-SA")} → ${p.end.toLocaleDateString("ar-SA")}</span>
-          </div>
-          <div style="position:relative; height:18px; background:#e5e7eb; border-radius:999px; overflow:hidden;">
-            <div style="
-              position:absolute;
-              inset-block:2px;
-              inset-inline-start:${leftPercent}%;
-              width:${widthPercent}%;
-              min-width:6%;
-              border-radius:999px;
-              background:linear-gradient(90deg, var(--tilad-teal), var(--tilad-purple));
-            "></div>
-          </div>
+      document.querySelectorAll(".wizard-step-chip").forEach(chip => {
+        const s = Number(chip.getAttribute("data-step"));
+        chip.classList.toggle("active", s === step);
+      });
+
+      document.getElementById("prevBtn").disabled = (step === 1);
+      document.getElementById("nextBtn").textContent =
+        (step === maxStepExperimental) ? "حفظ (نسخة تجريبية)" : "التالي";
+
+      document.getElementById("wizardStepLabel").textContent =
+        `الخطوة ${step} من ${maxStepExperimental} (مرحلة تجريبية)`;
+    }
+
+    function nextStep() {
+      if (currentStep < maxStepExperimental) {
+        goToStep(currentStep + 1);
+      } else {
+        alert("في الإصدارات القادمة سيتم حفظ بيانات العرض الفني وربطها بنظام داخلي أو Google Sheet.");
+      }
+    }
+
+    function prevStep() {
+      if (currentStep > 1) {
+        goToStep(currentStep - 1);
+      }
+    }
+
+    function addPhaseRow() {
+      const tbody = document.querySelector("#phasesTable tbody");
+      const rowCount = tbody.rows.length + 1;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${rowCount}</td>
+        <td><input type="text" placeholder="اسم المرحلة" /></td>
+        <td><input type="text" placeholder="وصف مختصر" /></td>
+        <td><input type="date" /></td>
+        <td><input type="date" /></td>
+        <td><button type="button" class="secondary-btn" onclick="deletePhaseRow(this)">✕</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function deletePhaseRow(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+      document.querySelectorAll("#phasesTable tbody tr").forEach((tr, idx) => {
+        tr.cells[0].textContent = idx + 1;
+      });
+    }
+
+    function generateGanttFromPhases() {
+      const container = document.getElementById("ganttContainer");
+      const rows = document.querySelectorAll("#phasesTable tbody tr");
+      const phases = [];
+
+      rows.forEach(row => {
+        const name = row.cells[1].querySelector("input").value;
+        const desc = row.cells[2].querySelector("input").value;
+        const start = row.cells[3].querySelector("input").value;
+        const end = row.cells[4].querySelector("input").value;
+
+        if (name && start && end) {
+          phases.push({ name, desc, start: new Date(start), end: new Date(end) });
+        }
+      });
+
+      if (!phases.length) {
+        container.innerHTML = `<p style="font-size:0.8rem; color:#b91c1c;">الرجاء إدخال اسم وتواريخ البداية والنهاية لمرحلة واحدة على الأقل.</p>`;
+        return;
+      }
+
+      const minDate = new Date(Math.min(...phases.map(p => p.start.getTime())));
+      const maxDate = new Date(Math.max(...phases.map(p => p.end.getTime())));
+      const totalDays = Math.max(1, Math.round((maxDate - minDate) / (1000 * 60 * 60 * 24)));
+
+      let html = `
+        <div style="font-size:0.78rem; color:#4b5563; margin-bottom:6px;">
+          من ${minDate.toLocaleDateString("ar-SA")} إلى ${maxDate.toLocaleDateString("ar-SA")} (${totalDays} يوماً تقريباً)
         </div>
-      `;
-    });
-
-    html += `</div>`;
-    container.innerHTML = html;
-  }
-
-  async function loadExperienceProjects() {
-    const container = document.getElementById("expProjectsContainer");
-    container.innerHTML = "جاري التحميل...";
-
-    try {
-      const sheetId = "SHEET_ID";
-      const tab = "Experience_Projects";
-
-      const url =
-        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-
-      const res = await fetch(url);
-      const text = await res.text();
-      const json = JSON.parse(text.substring(47, text.length - 2));
-
-      let html = `
-        <table class="proposal-table" style="margin-top:6px;">
-          <thead>
-            <tr>
-              <th>اختيار</th>
-              <th>اسم المشروع</th>
-              <th>الجهة</th>
-              <th>السنة</th>
-              <th>الوصف</th>
-            </tr>
-          </thead>
-          <tbody>
+        <div style="display:flex; flex-direction:column; gap:4px;">
       `;
 
-      json.table.rows.forEach((r, i) => {
-        const proj = r.c.map(c => c ? c.v : "");
+      phases.forEach((p, idx) => {
+        const offsetDays = Math.round((p.start - minDate) / (1000 * 60 * 60 * 24));
+        const phaseDays = Math.max(1, Math.round((p.end - p.start) / (1000 * 60 * 60 * 24)));
+        const leftPercent = (offsetDays / totalDays) * 100;
+        const widthPercent = (phaseDays / totalDays) * 100;
 
         html += `
-          <tr>
-            <td><input type="checkbox" data-exp-index="${i}" /></td>
-            <td>${proj[0]}</td>
-            <td>${proj[1]}</td>
-            <td>${proj[2]}</td>
-            <td>${proj[3]}</td>
-          </tr>
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:2px;">
+              <span>${idx + 1}. ${p.name}</span>
+              <span>${p.start.toLocaleDateString("ar-SA")} → ${p.end.toLocaleDateString("ar-SA")}</span>
+            </div>
+            <div style="position:relative; height:18px; background:#e5e7eb; border-radius:999px; overflow:hidden;">
+              <div style="
+                position:absolute;
+                inset-block:2px;
+                inset-inline-start:${leftPercent}%;
+                width:${widthPercent}%;
+                min-width:6%;
+                border-radius:999px;
+                background:linear-gradient(90deg, var(--tilad-teal), var(--tilad-purple));
+              "></div>
+            </div>
+          </div>
         `;
       });
 
-      html += `</tbody></table>`;
+      html += `</div>`;
       container.innerHTML = html;
-
-    } catch (err) {
-      container.innerHTML = `<span style="color:red;">تعذر تحميل البيانات</span>`;
     }
-  }
 
-  async function loadTeamMembers() {
-    const container = document.getElementById("teamMembersContainer");
-    container.innerHTML = "جاري التحميل...";
-
-    try {
-      const sheetId = "SHEET_ID";
-      const tab = "Team_Members";
-
-      const url =
-        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-
-      const res = await fetch(url);
-      const text = await res.text();
-      const json = JSON.parse(text.substring(47, text.length - 2));
-
-      let html = `
-        <table class="proposal-table" style="margin-top:6px;">
-          <thead>
-            <tr>
-              <th>اختيار</th>
-              <th>الاسم</th>
-              <th>المنصب</th>
-              <th>الخبرة (سنة)</th>
-              <th>مؤهلات</th>
-            </tr>
-          </thead>
-          <tbody>
+    // الخبرات السابقة (يدوي)
+    function addExperienceRow() {
+      const tbody = document.querySelector("#expTable tbody");
+      const rowCount = tbody.rows.length + 1;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${rowCount}</td>
+        <td><input type="text" placeholder="اسم المشروع" /></td>
+        <td><input type="text" placeholder="اسم الجهة" /></td>
+        <td><input type="text" placeholder="السنة" /></td>
+        <td><input type="text" placeholder="وصف مختصر" /></td>
+        <td><button type="button" class="secondary-btn" onclick="deleteExpRow(this)">✕</button></td>
       `;
-
-      json.table.rows.forEach((r, i) => {
-        const m = r.c.map(c => c ? c.v : "");
-
-        html += `
-          <tr>
-            <td><input type="checkbox" data-team-index="${i}" /></td>
-            <td>${m[0]}</td>
-            <td>${m[1]}</td>
-            <td>${m[2]}</td>
-            <td>${m[3]}</td>
-          </tr>
-        `;
-      });
-
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-
-    } catch (err) {
-      container.innerHTML = `<span style="color:red;">تعذر تحميل الفريق</span>`;
+      tbody.appendChild(tr);
     }
-  }
 
-  async function loadCompanyDocs() {
-    const container = document.getElementById("docsContainer");
-    container.innerHTML = "جاري التحميل...";
+    function deleteExpRow(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+      document.querySelectorAll("#expTable tbody tr").forEach((tr, idx) => {
+        tr.cells[0].textContent = idx + 1;
+      });
+    }
 
-    try {
-      const sheetId = "SHEET_ID";
-      const tab = "Company_Docs";
-
-      const url =
-        `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:json&sheet=${tab}`;
-
-      const res = await fetch(url);
-      const text = await res.text();
-      const json = JSON.parse(text.substring(47, text.length - 2));
-
-      let html = `
-        <table class="proposal-table" style="margin-top:6px;">
-          <thead>
-            <tr>
-              <th>اختيار</th>
-              <th>اسم الوثيقة</th>
-              <th>النوع</th>
-              <th>الوصف</th>
-            </tr>
-          </thead>
-          <tbody>
+    // الخبراء / فريق العمل (يدوي)
+    function addExpertRow() {
+      const tbody = document.querySelector("#expertsTable tbody");
+      const rowCount = tbody.rows.length + 1;
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${rowCount}</td>
+        <td><input type="text" placeholder="اسم الخبير" /></td>
+        <td><input type="text" placeholder="المؤهل" /></td>
+        <td><input type="text" placeholder="المنصب في المشروع" /></td>
+        <td><input type="number" min="0" placeholder="سنوات الخبرة" /></td>
+        <td><input type="text" placeholder="نبذة مختصرة" /></td>
+        <td><button type="button" class="secondary-btn" onclick="deleteExpertRow(this)">✕</button></td>
       `;
-
-      json.table.rows.forEach((r, i) => {
-        const d = r.c.map(c => c ? c.v : "");
-
-        html += `
-          <tr>
-            <td><input type="checkbox" data-doc-index="${i}" /></td>
-            <td>${d[0]}</td>
-            <td>${d[1]}</td>
-            <td>${d[2]}</td>
-          </tr>
-        `;
-      });
-
-      html += `</tbody></table>`;
-      container.innerHTML = html;
-
-    } catch (err) {
-      container.innerHTML = `<span style="color:red;">تعذر تحميل الوثائق</span>`;
-    }
-  }
-
-  function generatePreview() {
-    const title = document.getElementById("pTitle").value;
-    const client = document.getElementById("pClient").value;
-    const duration = document.getElementById("pDuration").value;
-
-    const intro = document.getElementById("pIntro").value;
-    const understanding = document.getElementById("pUnderstanding").value;
-    const objectives = document.getElementById("pObjectives").value;
-    const summary = document.getElementById("pExecSummary").value;
-
-    const knowledgeTransfer = document.getElementById("knowledgeTransfer")?.value || "";
-    const qualityPlan = document.getElementById("qualityPlan")?.value || "";
-    const riskManagement = document.getElementById("riskManagement")?.value || "";
-
-    const hsePolicy = document.getElementById("hsePolicy")?.value || "";
-    const hseRisk = document.getElementById("hseRisk")?.value || "";
-    const hsePlan = document.getElementById("hsePlan")?.value || "";
-
-    const box = document.getElementById("reviewBox");
-
-    box.innerHTML = `
-      <h3 style="margin-top:0;">${title || "عنوان المشروع"}</h3>
-      <p><strong>الجهة:</strong> ${client || "—"}</p>
-      <p><strong>مدة المشروع:</strong> ${duration ? duration + " شهراً" : "—"}</p>
-
-      <hr/>
-
-      <h4>المقدمة</h4>
-      <p>${intro || "<span style='color:#9ca3af;'>لم يتم إدخال مقدمة بعد.</span>"}</p>
-
-      <h4>الفهم العام لنطاق العمل</h4>
-      <p>${understanding || "<span style='color:#9ca3af;'>لم يتم إدخال الفهم العام بعد.</span>"}</p>
-
-      <h4>أهداف المشروع</h4>
-      <p>${objectives || "<span style='color:#9ca3af;'>لم يتم إدخال الأهداف بعد.</span>"}</p>
-
-      <h4>الملخص التنفيذي</h4>
-      <p>${summary || "<span style='color:#9ca3af;'>لم يتم إدخال الملخص التنفيذي بعد.</span>"}</p>
-
-      <hr/>
-
-      <h4>آلية نقل المعرفة</h4>
-      <p>${knowledgeTransfer || "<span style='color:#9ca3af;'>لم يتم إدخال آلية نقل المعرفة بعد.</span>"}</p>
-
-      <h4>خطة إدارة الجودة</h4>
-      <p>${qualityPlan || "<span style='color:#9ca3af;'>لم يتم إدخال خطة الجودة بعد.</span>"}</p>
-
-      <h4>إدارة المخاطر (غير السلامة)</h4>
-      <p>${riskManagement || "<span style='color:#9ca3af;'>لم يتم إدخال خطة إدارة المخاطر بعد.</span>"}</p>
-
-      <hr/>
-
-      <h4>خطة السلامة والصحة المهنية (HSE)</h4>
-      <p><strong>السياسة:</strong><br>${hsePolicy || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
-      <p><strong>إدارة المخاطر:</strong><br>${hseRisk || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
-      <p><strong>خطة الطوارئ:</strong><br>${hsePlan || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
-
-      <p style="color:#6b7280; margin-top:10px;">
-        سيتم لاحقاً إضافة ملخص للمراحل، الخبرات، فريق العمل، والوثائق ضمن هذه المعاينة.
-      </p>
-    `;
-  }
-
-  const docUploadInput = document.getElementById("docUpload");
-  if (docUploadInput) {
-    docUploadInput.addEventListener("change", () => {
-      const list = document.getElementById("localDocsList");
-      list.innerHTML = "";
-      Array.from(docUploadInput.files).forEach(f => {
-        const li = document.createElement("li");
-        li.textContent = "📎 " + f.name;
-        list.appendChild(li);
-      });
-    });
-  }
-
-  function exportProposalPDF() {
-    const cover = document.querySelector(".cover-a4");
-    const review = document.getElementById("reviewBox");
-
-    if (!cover || !review) {
-      alert("لا يمكن العثور على محتوى التصدير.");
-      return;
+      tbody.appendChild(tr);
     }
 
-    const wrapper = document.createElement("div");
-    wrapper.style.padding = "20px";
-    wrapper.appendChild(cover.cloneNode(true));
+    function deleteExpertRow(btn) {
+      const row = btn.closest("tr");
+      row.remove();
+      document.querySelectorAll("#expertsTable tbody tr").forEach((tr, idx) => {
+        tr.cells[0].textContent = idx + 1;
+      });
+    }
 
-    const separator = document.createElement("hr");
-    separator.style.margin = "24px 0";
-    wrapper.appendChild(separator);
+    function generatePreview() {
+      const title = document.getElementById("pTitle").value;
+      const client = document.getElementById("pClient").value;
+      const duration = document.getElementById("pDuration").value;
 
-    const reviewClone = review.cloneNode(true);
-    wrapper.appendChild(reviewClone);
+      const intro = document.getElementById("pIntro").value;
+      const understanding = document.getElementById("pUnderstanding").value;
+      const objectives = document.getElementById("pObjectives").value;
+      const summary = document.getElementById("pExecSummary").value;
 
-    const opt = {
-      margin: 10,
-      filename: 'Tilad_Technical_Proposal.pdf',
-      image: { type: 'jpeg', quality: 0.95 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+      const knowledgeTransfer = document.getElementById("knowledgeTransfer")?.value || "";
+      const qualityPlan = document.getElementById("qualityPlan")?.value || "";
+      const riskManagement = document.getElementById("riskManagement")?.value || "";
 
-    html2pdf().set(opt).from(wrapper).save();
-  }
-</script>
+      const hsePolicy = document.getElementById("hsePolicy")?.value || "";
+      const hseRisk = document.getElementById("hseRisk")?.value || "";
+      const hsePlan = document.getElementById("hsePlan")?.value || "";
+      const hseRoles = document.getElementById("hseRoles")?.value || "";
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-YcsIPVb9C1KZx2drXr/9YJ4BcC2pN4uCISEWvZ3p4SbRzczNlEGnsxW0t3z9zJrB1iRaYqZ7uW2kVj2r7Uq2Og==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+      // جمع الخبرات السابقة
+      const expRows = document.querySelectorAll("#expTable tbody tr");
+      const experiences = [];
+      expRows.forEach(tr => {
+        const cells = tr.querySelectorAll("td");
+        const name = cells[1].querySelector("input").value;
+        const entity = cells[2].querySelector("input").value;
+        const year = cells[3].querySelector("input").value;
+        const desc = cells[4].querySelector("input").value;
+        if (name || entity || year || desc) {
+          experiences.push({ name, entity, year, desc });
+        }
+      });
+
+      // جمع الخبراء
+      const expertRows = document.querySelectorAll("#expertsTable tbody tr");
+      const experts = [];
+      expertRows.forEach(tr => {
+        const cells = tr.querySelectorAll("td");
+        const name = cells[1].querySelector("input").value;
+        const degree = cells[2].querySelector("input").value;
+        const role = cells[3].querySelector("input").value;
+        const years = cells[4].querySelector("input").value;
+        const bio = cells[5].querySelector("input").value;
+        if (name || degree || role || years || bio) {
+          experts.push({ name, degree, role, years, bio });
+        }
+      });
+
+      let expHtml = "";
+      if (experiences.length) {
+        expHtml += "<ul>";
+        experiences.forEach(e => {
+          expHtml += `<li><strong>${e.name || "مشروع غير مسمى"}</strong> – ${e.entity || "جهة غير محددة"} (${e.year || "—"}) – ${e.desc || ""}</li>`;
+        });
+        expHtml += "</ul>";
+      } else {
+        expHtml = "<span style='color:#9ca3af;'>لم يتم إدخال خبرات سابقة بعد.</span>";
+      }
+
+      let expertsHtml = "";
+      if (experts.length) {
+        expertsHtml += "<ul>";
+        experts.forEach(x => {
+          expertsHtml += `<li><strong>${x.name || "خبير غير مسمى"}</strong> – ${x.role || "دور غير محدد"} (${x.degree || "بدون مؤهل مذكور"}, خبرة ${x.years || "—"} سنة)<br>${x.bio || ""}</li>`;
+        });
+        expertsHtml += "</ul>";
+      } else {
+        expertsHtml = "<span style='color:#9ca3af;'>لم يتم إدخال بيانات فريق العمل بعد.</span>";
+      }
+
+      const box = document.getElementById("reviewBox");
+      box.innerHTML = `
+        <h3 style="margin-top:0;">${title || "عنوان المشروع"}</h3>
+        <p><strong>الجهة:</strong> ${client || "—"}</p>
+        <p><strong>مدة المشروع:</strong> ${duration ? duration + " شهراً" : "—"}</p>
+
+        <hr/>
+
+        <h4>المقدمة</h4>
+        <p>${intro || "<span style='color:#9ca3af;'>لم يتم إدخال مقدمة بعد.</span>"}</p>
+
+        <h4>الفهم العام لنطاق العمل</h4>
+        <p>${understanding || "<span style='color:#9ca3af;'>لم يتم إدخال الفهم العام بعد.</span>"}</p>
+
+        <h4>أهداف المشروع</h4>
+        <p>${objectives || "<span style='color:#9ca3af;'>لم يتم إدخال الأهداف بعد.</span>"}</p>
+
+        <h4>الملخص التنفيذي</h4>
+        <p>${summary || "<span style='color:#9ca3af;'>لم يتم إدخال الملخص التنفيذي بعد.</span>"}</p>
+
+        <hr/>
+
+        <h4>آلية نقل المعرفة</h4>
+        <p>${knowledgeTransfer || "<span style='color:#9ca3af;'>لم يتم إدخال آلية نقل المعرفة بعد.</span>"}</p>
+
+        <h4>خطة إدارة الجودة</h4>
+        <p>${qualityPlan || "<span style='color:#9ca3af;'>لم يتم إدخال خطة الجودة بعد.</span>"}</p>
+
+        <h4>إدارة المخاطر (غير السلامة)</h4>
+        <p>${riskManagement || "<span style='color:#9ca3af;'>لم يتم إدخال خطة إدارة المخاطر بعد.</span>"}</p>
+
+        <hr/>
+
+        <h4>الخبرات السابقة</h4>
+        ${expHtml}
+
+        <hr/>
+
+        <h4>فريق العمل والخبراء</h4>
+        ${expertsHtml}
+
+        <hr/>
+
+        <h4>خطة السلامة والصحة المهنية (HSE)</h4>
+        <p><strong>السياسة:</strong><br>${hsePolicy || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+        <p><strong>إدارة المخاطر:</strong><br>${hseRisk || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+        <p><strong>خطة الطوارئ:</strong><br>${hsePlan || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+        <p><strong>الأدوار والمسؤوليات:</strong><br>${hseRoles || "<span style='color:#9ca3af;'>لا توجد بيانات.</span>"}</p>
+      `;
+    }
+
+    function exportProposalPDF() {
+      const cover = document.querySelector(".cover-a4");
+      const review = document.getElementById("reviewBox");
+
+      if (!cover || !review) {
+        alert("لا يمكن العثور على محتوى التصدير.");
+        return;
+      }
+
+      const wrapper = document.createElement("div");
+      wrapper.style.padding = "20px";
+      wrapper.appendChild(cover.cloneNode(true));
+
+      const separator = document.createElement("hr");
+      separator.style.margin = "24px 0";
+      wrapper.appendChild(separator);
+
+      const reviewClone = review.cloneNode(true);
+      wrapper.appendChild(reviewClone);
+
+      const opt = {
+        margin: 10,
+        filename: "Tilad_Technical_Proposal.pdf",
+        image: { type: "jpeg", quality: 0.95 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "portrait" }
+      };
+
+      if (typeof html2pdf === "undefined") {
+        alert("مكتبة التصدير إلى PDF لم تُحمَّل بعد. تأكد من اتصال الإنترنت ثم أعد المحاولة.");
+        return;
+      }
+
+      html2pdf().set(opt).from(wrapper).save();
+    }
+  </script>
+
+  <!-- مكتبة html2pdf للتصدير إلى PDF (بدون integrity لتفادي المشكلة) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"
+          referrerpolicy="no-referrer"></script>
 </body>
 </html>
